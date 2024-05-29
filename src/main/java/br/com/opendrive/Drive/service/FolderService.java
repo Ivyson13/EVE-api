@@ -5,14 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.opendrive.Drive.entity.File;
 import br.com.opendrive.Drive.entity.Folder;
+import br.com.opendrive.Drive.repository.FileRepository;
 import br.com.opendrive.Drive.repository.FolderRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class FolderService {
 
     @Autowired
     private FolderRepository folderRepository;
+
+    @Autowired
+    private FileRepository fileRepository;
 
     public Folder createFolder(String name, Long parentId) {
         Folder folder = new Folder();
@@ -28,6 +34,30 @@ public class FolderService {
 
     public List<Folder> getAllFolders() {
         return folderRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteFolder(Long folderId) {
+        Folder folder = folderRepository.findById(folderId).orElseThrow();
+        deleteRecursively(folder);
+    }
+
+    private void deleteRecursively(Folder folder) {
+        // Delete files in the folder
+        List<File> files = folder.getFiles();
+        for (File file : files) {
+            fileRepository.delete(file);
+        }
+
+        // Delete subfolders recursively
+        if (folder.getSubfolders() != null) {
+            for (Folder subfolder : folder.getSubfolders()) {
+                deleteRecursively(subfolder);
+            }
+        }
+
+        // Delete the folder itself
+        folderRepository.delete(folder);
     }
 
     // Other CRUD operations

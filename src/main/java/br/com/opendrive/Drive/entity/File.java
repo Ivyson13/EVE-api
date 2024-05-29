@@ -1,5 +1,7 @@
 package br.com.opendrive.Drive.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +18,7 @@ public class File {
     private String name;
     private String content;  // Content in Base64
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "folder_id")
     private Folder folder;
