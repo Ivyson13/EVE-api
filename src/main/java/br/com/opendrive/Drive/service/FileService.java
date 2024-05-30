@@ -41,4 +41,11 @@ public class FileService {
         File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
         fileRepository.delete(file);
     }
+    
+    @Transactional
+    public File renameFile(Long fileId, String newName) {
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
+        file.setName(newName);
+        return fileRepository.save(file);
+    }
 }

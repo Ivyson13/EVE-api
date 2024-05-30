@@ -60,5 +60,11 @@ public class FolderService {
         folderRepository.delete(folder);
     }
 
-    // Other CRUD operations
+    @Transactional
+    public Folder renameFolder(Long folderId, String newName) {
+        Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found"));
+        folder.setName(newName);
+        return folderRepository.save(folder);
+    }
+
 }
