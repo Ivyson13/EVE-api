@@ -15,22 +15,22 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Folder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
+	private String name;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Folder parent;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "parent_id")
+	private Folder parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Folder> subfolders;
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	private List<Folder> subfolders;
 
-    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
-    private List<File> files;
+	@OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+	private List<File> files;
 
 	public Long getId() {
 		return id;
@@ -72,5 +72,4 @@ public class Folder {
 		this.files = files;
 	}
 
-    
 }
