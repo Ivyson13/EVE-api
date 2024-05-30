@@ -9,6 +9,7 @@ import br.com.opendrive.Drive.entity.File;
 import br.com.opendrive.Drive.entity.Folder;
 import br.com.opendrive.Drive.repository.FileRepository;
 import br.com.opendrive.Drive.repository.FolderRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class FileService {
@@ -35,5 +36,9 @@ public class FileService {
         return folder.getFiles();
     }
 
-    // Other CRUD operations
+    @Transactional
+    public void deleteFile(Long fileId) {
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
+        fileRepository.delete(file);
+    }
 }
