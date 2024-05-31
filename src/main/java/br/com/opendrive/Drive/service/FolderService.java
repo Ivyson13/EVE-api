@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.opendrive.Drive.entity.File;
 import br.com.opendrive.Drive.entity.Folder;
+import br.com.opendrive.Drive.projection.FolderProjection;
 import br.com.opendrive.Drive.repository.FileRepository;
 import br.com.opendrive.Drive.repository.FolderRepository;
 import jakarta.transaction.Transactional;
@@ -19,6 +20,8 @@ public class FolderService {
 
 	@Autowired
 	private FileRepository fileRepository;
+
+	private List<Folder> temp;
 
 	public Folder createFolder(String name, Long parentId) {
 		Folder folder = new Folder();
@@ -67,7 +70,7 @@ public class FolderService {
 		return folderRepository.save(folder);
 	}
 	
-	public List<Folder> listSubfolders(Long parentFolderId) {
+	public List<FolderProjection> listSubfolders(Long parentFolderId) {
         return folderRepository.findSubfoldersByParentId(parentFolderId);
     }
 

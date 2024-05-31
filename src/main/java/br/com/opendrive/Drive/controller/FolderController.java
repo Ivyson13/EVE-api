@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.opendrive.Drive.entity.Folder;
+import br.com.opendrive.Drive.projection.FolderProjection;
 import br.com.opendrive.Drive.service.FolderService;
 
 @CrossOrigin
@@ -47,8 +48,8 @@ public class FolderController {
 	
 	// Endpoint para listar subpastas
     @GetMapping("/{parentFolderId}/subfolders")
-    public ResponseEntity<List<Folder>> listSubfolders(@PathVariable Long parentFolderId) {
-        List<Folder> subfolders = folderService.listSubfolders(parentFolderId);
+    public ResponseEntity<List<FolderProjection>> listSubfolders(@PathVariable Long parentFolderId) {
+        List<FolderProjection> subfolders = folderService.listSubfolders(parentFolderId);
         return ResponseEntity.ok(subfolders);
     }
 }
