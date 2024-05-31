@@ -46,10 +46,17 @@ public class FolderController {
 		return folderService.renameFolder(id, newName);
 	}
 	
-	// Endpoint para listar subpastas
+	 // Endpoint para listar subpastas retornando apenas id e nome
     @GetMapping("/{parentFolderId}/subfolders")
     public ResponseEntity<List<FolderProjection>> listSubfolders(@PathVariable Long parentFolderId) {
         List<FolderProjection> subfolders = folderService.listSubfolders(parentFolderId);
         return ResponseEntity.ok(subfolders);
+    }
+    
+ // Endpoint para listar pastas que não possuem subpastas
+    @GetMapping("/without-subfolders")
+    public ResponseEntity<List<FolderProjection>> listFoldersWithoutSubfolders() {
+        List<FolderProjection> folders = folderService.listFoldersWithoutSubfolders();
+        return ResponseEntity.ok(folders);
     }
 }

@@ -21,8 +21,6 @@ public class FolderService {
 	@Autowired
 	private FileRepository fileRepository;
 
-	private List<Folder> temp;
-
 	public Folder createFolder(String name, Long parentId) {
 		Folder folder = new Folder();
 		folder.setName(name);
@@ -70,8 +68,14 @@ public class FolderService {
 		return folderRepository.save(folder);
 	}
 	
+	// Método para listar subpastas retornando apenas id e nome
 	public List<FolderProjection> listSubfolders(Long parentFolderId) {
         return folderRepository.findSubfoldersByParentId(parentFolderId);
+    }
+	
+	 // Método para listar pastas que não possuem subpastas
+    public List<FolderProjection> listFoldersWithoutSubfolders() {
+        return folderRepository.findFoldersWithoutSubfolders();
     }
 
 }
